@@ -1,1 +1,30 @@
 
+function main(workbook: ExcelScript.Workbook) {
+    // Get the active cell and worksheet.
+    //let selectedCell = workbook.getActiveCell();
+    let sourceSheet = workbook.getWorksheet("BAC Klaim").getRange("A1:I500") ;
+
+    let targetSheet = workbook.getWorksheet("BAC Klaim").getRange("A1");
+
+    targetSheet.copyFrom(sourceSheet, ExcelScript.RangeCopyType.values)
+
+    //Set Variable of Sheet Name
+    let Except_for_Sheet_Name = "BAC Klaim" as String
+
+    // Get the worksheets
+    const worksheets = workbook.getWorksheets();
+
+    // Iterate through the worksheets in reverse order to avoid index issues
+    for (let i = worksheets.length - 1; i >= 0; i--) {
+        const worksheet = worksheets[i];
+
+        // Check if the worksheet name is not "DATA"
+        if (worksheet.getName() !== Except_for_Sheet_Name) {
+            // Delete the worksheet
+            worksheet.delete();
+        }
+    }
+
+
+
+}
